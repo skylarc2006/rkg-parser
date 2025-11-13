@@ -12,6 +12,7 @@
 #include <array>
 
 class RKGHeader {
+    // https://wiki.tockdom.com/wiki/RKG_(File_Format)
     std::string m_rkgd; 				            // 0x04, offset 0x00
     FinishTime m_finishTime; 			            // 0x03, offset 0x04
     uint16_t m_trackID;				                // 6 bits, offset 0x07
