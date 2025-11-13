@@ -39,7 +39,7 @@ class RKGHeader {
     MiiData m_miiData;				                // 0x4A, offset 0x3C
     uint16_t m_miiCrc16;				            // 0x02, offset 0x86
 
-    // Parses RKGD magic from ghost file
+    // Parse RKGD magic from ghost file
     void parseRkgd(BigEndianBitReader& ghostReader);
 
 public:
@@ -47,6 +47,9 @@ public:
 
     std::string_view rkgd() { return m_rkgd; }
     FinishTime& finishTime() { return m_finishTime; }
+
+    // Get track name
+    std::string_view trackName();
 };
 
 #endif // RKG_HEADER_H

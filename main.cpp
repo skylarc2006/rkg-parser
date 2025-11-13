@@ -15,7 +15,12 @@ int main(int argc, char *argv[])
     std::ifstream ghostFile{ "140915.rkg", std::ios::binary };
     RKGHeader ghostHeader{ ghostFile };
 
-    std::cout << "RKGD: " << ghostHeader.rkgd() << '\n';
+    if (ghostHeader.rkgd() != "RKGD") {
+        std::cerr << "It appears this is not a Mario Kart Wii ghost file!\n";
+        return 1;
+    }
+    
+    std::cout << "Track name: " << ghostHeader.trackName() << '\n';
     std::cout << "Finish time: " << ghostHeader.finishTime().asString() << '\n';
 }
 
