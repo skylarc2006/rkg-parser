@@ -13,6 +13,7 @@
 
 class RKGHeader {
     // https://wiki.tockdom.com/wiki/RKG_(File_Format)
+    // https://wiki.tockdom.com/wiki/List_of_Identifiers
     std::string m_rkgd; 				            // 0x04, offset 0x00
     FinishTime m_finishTime; 			            // 0x03, offset 0x04
     uint16_t m_trackID;				                // 6 bits, offset 0x07
@@ -47,9 +48,18 @@ public:
 
     std::string_view rkgd() { return m_rkgd; }
     FinishTime& finishTime() { return m_finishTime; }
-
-    // Get track name
+    std::vector<FinishTime>& lapSplitTimes() { return m_lapSplitTimes; }
+    uint16_t lapCount() { return m_lapCount; }
     std::string_view trackName();
+    std::string_view character();
+    std::string_view vehicle();
+    uint16_t yearSet() { return m_yearSet; }
+    uint16_t monthSet() { return m_monthSet; }
+    uint16_t daySet() { return m_daySet; }
+    std::string_view monthAsString();
+    std::string dateSet();
+    uint16_t controllerID() { return m_controllerID; }
+    std::string_view controllerString();
 };
 
 #endif // RKG_HEADER_H
