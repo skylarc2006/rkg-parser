@@ -265,3 +265,16 @@ std::string_view RKGHeader::controllerString() {
     };
     return controllers[m_controllerID];
 }
+
+std::string_view RKGHeader::ghostTypeString() {
+    if (m_ghostType == 0x01) return "Player's Best Time";
+    else if (m_ghostType == 0x02) return "World Record Ghost";
+    else if (m_ghostType == 0x03) return "Continental Record Ghost";
+    else if (m_ghostType == 0x04) return "Rival Ghost";
+    else if (m_ghostType == 0x05) return "Special Ghost";
+    else if (m_ghostType == 0x06) return "Ghost Race";
+    else if (m_ghostType <= 0x24) return "Friend Ghost";
+    else if (m_ghostType == 0x25) return "Normal Staff Ghost";
+    else if (m_ghostType == 0x26) return "Expert Staff Ghost";
+   else return "Unknown";
+}
