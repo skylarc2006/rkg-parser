@@ -24,7 +24,7 @@ RKGHeader::RKGHeader(std::ifstream& file) {
     m_monthSet = ghostReader.readBits(0x0A * 8 + 3, 4);
     m_daySet = ghostReader.readBits(0x0A * 8 + 7, 5);
     m_controllerID = ghostReader.readBits(0x0B * 8 + 4, 4);
-    m_isCompressed = ghostReader.readBits(0x0C * 8 + 4, 1);
+    m_compressed = ghostReader.readBits(0x0C * 8 + 4, 1);
     m_ghostType = ghostReader.readBits(0x0C * 8 + 7, 7);
     m_isAutomaticDrift = ghostReader.readBits(0x0D * 8 + 6, 1);
     m_decompressedInputDataLength = ghostReader.readUInt16(0x0E * 8);
