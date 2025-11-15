@@ -25,7 +25,7 @@ class RKGHeader {
     uint16_t m_daySet;				                // 5 bits, offset 0x0A.7
     uint16_t m_controllerID;			            // 4 bits, offset 0x0B.4
     uint8_t m_unknown2;				                // 4 bits, offset 0x0C, always 0?
-    bool m_isCompressed;				            // 1 bit, offset 0xC.4
+    bool m_compressed;				            // 1 bit, offset 0xC.4
     uint8_t m_unknown3;				                // 2 bits, offset 0x0C.5, always 0?
     uint16_t m_ghostType;				            // 7 bits, offset 0x0C.7
     bool m_isAutomaticDrift;			            // 1 bit, offset 0x0D.6
@@ -60,6 +60,7 @@ public:
     std::string dateSet();
     uint16_t controllerID() { return m_controllerID; }
     std::string_view controllerString();
+    bool compressed() { return m_compressed; }
 };
 
 #endif // RKG_HEADER_H
