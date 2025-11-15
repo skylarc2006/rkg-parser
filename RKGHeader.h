@@ -61,6 +61,7 @@ public:
     uint16_t controllerID() { return m_controllerID; }
     std::string_view controllerString();
     bool compressed() { return m_compressed; }
+    std::string_view ghostTypeString();
 };
 
 #endif // RKG_HEADER_H
