@@ -63,5 +63,6 @@ public:
     bool compressed() { return m_compressed; }
     std::string_view ghostTypeString();
 };
+    std::string_view driftString() { return (m_isAutomaticDrift ? "Automatic" : "Manual"); }
 
 #endif // RKG_HEADER_H
