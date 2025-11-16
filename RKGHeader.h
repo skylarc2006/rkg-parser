@@ -64,5 +64,6 @@ public:
     std::string_view ghostTypeString();
 };
     std::string_view driftString() { return (m_isAutomaticDrift ? "Automatic" : "Manual"); }
+    uint16_t decompressedInputDataLength() { return m_decompressedInputDataLength; }
 
 #endif // RKG_HEADER_H
