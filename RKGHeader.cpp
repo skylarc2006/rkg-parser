@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <array>
 #include <unordered_map>
+#include <iostream>
 
 using namespace std::literals::string_view_literals;
 
@@ -40,6 +41,13 @@ RKGHeader::RKGHeader(std::ifstream& file) {
     m_locationCode = ghostReader.readUInt16(0x36 * 8);
 
     m_miiCrc16 = ghostReader.readUInt16(0x86 * 8);
+
+    // TESTING
+    std::cout << "CURRENT TESTING INFO\n";
+    std::cout << "====================\n";
+    std::cout << "Country code: " << m_countryCode << '\n';
+    std::cout << "State code: " << m_stateCode << '\n';
+    std::cout << "Location code: " << m_locationCode << "\n\n";
 }
 
 void RKGHeader::parseRkgd(BigEndianFileIO& ghostReader) {
@@ -277,4 +285,163 @@ std::string_view RKGHeader::ghostTypeString() {
     else if (m_ghostType == 0x25) return "Normal Staff Ghost";
     else if (m_ghostType == 0x26) return "Expert Staff Ghost";
    else return "Unknown";
+}
+
+std::string_view RKGHeader::countryString() {
+    static constexpr std::array<std::pair<size_t, std::string_view>, 124> countries = {{
+        {0x01, "Japan"sv},
+        {0x08, "Anguilla"sv},
+        {0x09, "Antigua and Barbuda"sv},
+        {0x0A, "Argentina"sv},
+        {0x0B, "Aruba"sv},
+        {0x0C, "Bahamas"sv},
+        {0x0D, "Barbados"sv},
+        {0x0E, "Belize"sv},
+        {0x0F, "Bolivia"sv},
+        {0x10, "Brazil"sv},
+        {0x11, "British Virgin Islands"sv},
+        {0x12, "Canada"sv},
+        {0x13, "Cayman Islands"sv},
+        {0x14, "Chile"sv},
+        {0x15, "Colombia"sv},
+        {0x16, "Costa Rica"sv},
+        {0x17, "Dominica"sv},
+        {0x18, "Dominican Republic"sv},
+        {0x19, "Ecuador"sv},
+        {0x1A, "El Salvador"sv},
+        {0x1B, "French Guiana"sv},
+        {0x1C, "Grenada"sv},
+        {0x1D, "Guadeloupe"sv},
+        {0x1E, "Guatemala"sv},
+        {0x1F, "Guyana"sv},
+        {0x20, "Haiti"sv},
+        {0x21, "Honduras"sv},
+        {0x22, "Jamaica"sv},
+        {0x23, "Martinique"sv},
+        {0x24, "Mexico"sv},
+        {0x25, "Montserrat"sv},
+        {0x26, "Netherlands Antilles"sv},
+        {0x27, "Nicaragua"sv},
+        {0x28, "Panama"sv},
+        {0x29, "Paraguay"sv},
+        {0x2A, "Peru"sv},
+        {0x2B, "St. Kitts and Nevis"sv},
+        {0x2C, "St. Lucia"sv},
+        {0x2D, "St. Vincent and the Grenadines"sv},
+        {0x2E, "Suriname"sv},
+        {0x2F, "Trinidad and Tobago"sv},
+        {0x30, "Turks and Caicos Islands"sv},
+        {0x31, "United States"sv},
+        {0x32, "Uruguay"sv},
+        {0x33, "US Virgin Islands"sv},
+        {0x34, "Venezuela"sv},
+
+        {0x40, "Albania"sv},
+        {0x41, "Australia"sv},
+        {0x42, "Austria"sv},
+        {0x43, "Belgium"sv},
+        {0x44, "Bosnia and Herzegovina"sv},
+        {0x45, "Botswana"sv},
+        {0x46, "Bulgaria"sv},
+        {0x47, "Croatia"sv},
+        {0x48, "Cyprus"sv},
+        {0x49, "Czech Republic"sv},
+        {0x4A, "Denmark"sv},
+        {0x4B, "Estonia"sv},
+        {0x4C, "Finland"sv},
+        {0x4D, "France"sv},
+        {0x4E, "Germany"sv},
+        {0x4F, "Greece"sv},
+        {0x50, "Hungary"sv},
+        {0x51, "Iceland"sv},
+        {0x52, "Ireland"sv},
+        {0x53, "Italy"sv},
+        {0x54, "Latvia"sv},
+        {0x55, "Lesotho"sv},
+        {0x56, "Liechtenstein"sv},
+        {0x57, "Lithuania"sv},
+        {0x58, "Luxembourg"sv},
+        {0x59, "F.Y.R. of Macedonia"sv},
+        {0x5A, "Malta"sv},
+        {0x5B, "Montenegro"sv},
+        {0x5C, "Mozambique"sv},
+        {0x5D, "Namibia"sv},
+        {0x5E, "Netherlands"sv},
+        {0x5F, "New Zealand"sv},
+        {0x60, "Norway"sv},
+        {0x61, "Poland"sv},
+        {0x62, "Portugal"sv},
+        {0x63, "Romania"sv},
+        {0x64, "Russia"sv},
+        {0x65, "Serbia"sv},
+        {0x66, "Slovakia"sv},
+        {0x67, "Slovenia"sv},
+        {0x68, "South Africa"sv},
+        {0x69, "Spain"sv},
+        {0x6A, "Swaziland"sv},
+        {0x6B, "Sweden"sv},
+        {0x6C, "Switzerland"sv},
+        {0x6D, "Turkey"sv},
+        {0x6E, "United Kingdom"sv},
+        {0x6F, "Zambia"sv},
+        {0x70, "Zimbabwe"sv},
+        {0x71, "Azerbaijan"sv},
+        {0x72, "Mauritania"sv},
+        {0x73, "Mali"sv},
+        {0x74, "Niger"sv},
+        {0x75, "Chad"sv},
+        {0x76, "Sudan"sv},
+        {0x77, "Eritrea"sv},
+        {0x78, "Djibouti"sv},
+        {0x79, "Somalia"sv},
+
+        {0x80, "Taiwan"sv},
+
+        {0x88, "South Korea"sv},
+
+        {0x90, "Hong Kong"sv},
+        {0x91, "Macao"sv},
+
+        {0x98, "Indonesia"sv},
+        {0x99, "Singapore"sv},
+        {0x9A, "Thailand"sv},
+        {0x9B, "Philippines"sv},
+        {0x9C, "Malaysia"sv},
+
+        {0xA0, "China"sv},
+
+        {0xA8, "U.A.E."sv},
+        {0xA9, "India"sv},
+        {0xAA, "Egypt"sv},
+        {0xAB, "Oman"sv},
+        {0xAC, "Qatar"sv},
+        {0xAD, "Kuwait"sv},
+        {0xAE, "Saudi Arabia"sv},
+        {0xAF, "Syria"sv},
+        {0xB0, "Bahrain"sv},
+        {0xB1, "Jordan"sv},
+    }};
+
+
+    for (auto& country : countries) {
+        if (m_countryCode == country.first) {
+            return country.second;
+        }
+    }
+        
+    return "Unknown";
+}
+
+std::string_view RKGHeader::stateString() {
+    return " ";
+}
+
+std::string_view RKGHeader::locationString() {
+    return " ";
+}
+
+std::string RKGHeader::combo() {
+    std::stringstream ss{};
+    ss << character() << " on " << vehicle() << " (" << driftString() << ")";
+    return ss.str();
 }

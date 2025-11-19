@@ -53,6 +53,7 @@ public:
     std::string_view trackName();
     std::string_view character();
     std::string_view vehicle();
+    std::string combo();
     uint16_t yearSet() { return m_yearSet; }
     uint16_t monthSet() { return m_monthSet; }
     uint16_t daySet() { return m_daySet; }
@@ -64,6 +65,9 @@ public:
     std::string_view ghostTypeString();
     std::string_view driftString() { return (m_automaticDrift ? "Automatic" : "Manual"); }
     uint16_t decompressedInputDataLength() { return m_decompressedInputDataLength; }
+    std::string_view countryString();
+    std::string_view stateString();
+    std::string_view locationString();
 };
 
 #endif // RKG_HEADER_H

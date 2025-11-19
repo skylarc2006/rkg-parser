@@ -25,10 +25,19 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    std::cout << "Track name: " << ghostHeader.trackName() << '\n';
-    std::cout << "Date set: " << ghostHeader.dateSet() << '\n';
-    std::cout << "Controller: " << ghostHeader.controllerString() << '\n';
-    std::cout << "Combo: " << ghostHeader.character() << " on " << ghostHeader.vehicle() << " (" << ghostHeader.driftString() << ")\n\n";
+    auto printField = [](const char* label, const std::string_view value) {
+    std::cout << label << value << '\n';
+    };
+
+    std::cout << "HEADER INFO:\n";
+    std::cout << "============\n";
+    printField("Track:\t\t", ghostHeader.trackName());
+    printField("Name:\t\t", "(not implemented)");
+    printField("Country:\t", ghostHeader.countryString());
+    printField("Date set:\t", ghostHeader.dateSet());
+    printField("Combo:\t\t", ghostHeader.combo());
+    printField("Controller:\t", ghostHeader.controllerString());
+    std::cout << '\n';
 
     for (size_t i{ 0 }; i < ghostHeader.lapCount(); i++) {
         std::cout << "Lap " << i + 1 << ": \t\t"
