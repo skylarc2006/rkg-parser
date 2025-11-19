@@ -1,7 +1,7 @@
 #ifndef RKG_HEADER_H
 #define RKG_HEADER_H
 
-#include "BigEndianBitReader.h"
+#include "BigEndianFileIO.h"
 #include "FinishTime.h"
 #include "MiiData.h"
 #include <fstream>
@@ -41,7 +41,7 @@ class RKGHeader {
     uint16_t m_miiCrc16;				            // 0x02, offset 0x86
 
     // Parse RKGD magic from ghost file
-    void parseRkgd(BigEndianBitReader& ghostReader);
+    void parseRkgd(BigEndianFileIO& ghostReader);
 
 public:
     explicit RKGHeader(std::ifstream& file);

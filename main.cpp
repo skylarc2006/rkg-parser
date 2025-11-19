@@ -1,7 +1,7 @@
 #include "MiiData.h"
 #include "FinishTime.h"
 #include "RKGHeader.h"
-#include "BigEndianBitReader.h"
+#include "BigEndianFileIO.h"
 #include <iostream>
 #include <fstream>
 #include <memory>
@@ -12,7 +12,12 @@
 
 int main(int argc, char *argv[])
 {
-    std::ifstream ghostFile{ "140915.rkg", std::ios::binary };
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <rkg file>\n";
+        return 1;
+    }
+
+    std::ifstream ghostFile{ argv[1], std::ios::binary };
     RKGHeader ghostHeader{ ghostFile };
 
     if (ghostHeader.rkgd() != "RKGD") {
@@ -23,7 +28,7 @@ int main(int argc, char *argv[])
     std::cout << "Track name: " << ghostHeader.trackName() << '\n';
     std::cout << "Date set: " << ghostHeader.dateSet() << '\n';
     std::cout << "Controller: " << ghostHeader.controllerString() << '\n';
-    std::cout << "Combo: " << ghostHeader.character() << " on " << ghostHeader.vehicle() << "\n\n";
+    std::cout << "Combo: " << ghostHeader.character() << " on " << ghostHeader.vehicle() << " (" << ghostHeader.driftString() << ")\n\n";
 
     for (size_t i{ 0 }; i < ghostHeader.lapCount(); i++) {
         std::cout << "Lap " << i + 1 << ": \t\t"

@@ -1,11 +1,11 @@
 #include "FinishTime.h"
-#include "BigEndianBitReader.h"
+#include "BigEndianFileIO.h"
 #include <cstdint>
 #include <string>
 #include <sstream>
 #include <iomanip>
 
-FinishTime::FinishTime(BigEndianBitReader& ghostReader, size_t byteOffset, size_t bitPos) {
+FinishTime::FinishTime(BigEndianFileIO& ghostReader, size_t byteOffset, size_t bitPos) {
         size_t bitOffset{ byteOffset * 8 + bitPos };
         m_minutes = ghostReader.readBits(bitOffset, 7);
         m_seconds = ghostReader.readBits(bitOffset + 7, 7);

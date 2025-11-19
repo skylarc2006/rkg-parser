@@ -1,5 +1,5 @@
-#ifndef BIG_ENDIAN_BIT_READER_H
-#define BIG_ENDIAN_BIT_READER_H
+#ifndef BIG_ENDIAN_FILE_IO_H
+#define BIG_ENDIAN_FILE_IO_H
 
 #include <fstream>
 #include <vector>
@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <algorithm>
 
-class BigEndianBitReader {
+class BigEndianFileIO {
 private:
     std::ifstream& m_stream;
     std::vector<uint8_t> m_buffer;
@@ -78,7 +78,7 @@ private:
     }
 
 public:
-    explicit BigEndianBitReader(std::ifstream& ifs) 
+    explicit BigEndianFileIO(std::ifstream& ifs) 
         : m_stream(ifs), m_bufferBitOffset(0), m_cachedFileSize(0), m_fileSizeCached(false) {
         if (!m_stream.is_open()) {
             throw std::invalid_argument("Stream is not open");
@@ -202,42 +202,4 @@ public:
     }
 };
 
-// Example usage:
-/*
-int main() {
-    std::ifstream file("data.bin", std::ios::binary);
-    BigEndianBitReader reader(file);
-    
-    // Read 12 bits from bit position 0
-    uint64_t val1 = reader.readBits(0, 12);
-    
-    // Read 3 bits from bit position 12 (crosses byte boundary)
-    uint64_t val2 = reader.readBits(12, 3);
-    
-    // Read 4 bytes from bit position 100
-    std::vector<uint8_t> bytes = reader.readBytesFromBitPos(100, 4);
-    
-    // Read 2 bytes from byte position 50
-    std::vector<uint8_t> bytes2 = reader.readBytes(50, 2);
-    
-    // Read a 32-bit integer from bit position 200
-    uint32_t val3 = reader.readUInt32(200);
-    
-    // Read the last byte of the file
-    uint64_t lastByte = reader.readBitsFromEnd(-8, 8);
-    
-    // Read the last 4 bytes of the file
-    std::vector<uint8_t> lastFourBytes = reader.readBytesFromEnd(-4, 4);
-    
-    // Read 16 bits starting 32 bits before the end
-    uint64_t val4 = reader.readBitsFromEnd(-32, 16);
-    
-    // Get file size
-    size_t sizeInBytes = reader.fileSizeBytes();
-    size_t sizeInBits = reader.fileSizeBits();
-    
-    return 0;
-}
-*/
-
-#endif // BIG_ENDIAN_BIT_READER_H
+#endif // BIG_ENDIAN_FILE_IO_H

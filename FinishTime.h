@@ -1,7 +1,7 @@
 #ifndef FINISH_TIME_H
 #define FINISH_TIME_H
 
-#include "BigEndianBitReader.h"
+#include "BigEndianFileIO.h"
 #include <cstdint>
 #include <string>
 #include <sstream>
@@ -13,7 +13,7 @@ class FinishTime {
 
 public:
     FinishTime() = default;
-    explicit FinishTime(BigEndianBitReader& ghostReader, size_t byteOffset, size_t bitPos);
+    explicit FinishTime(BigEndianFileIO& ghostReader, size_t byteOffset, size_t bitPos);
 
     uint16_t minutes() { return m_minutes; }
     uint16_t seconds() { return m_seconds; }

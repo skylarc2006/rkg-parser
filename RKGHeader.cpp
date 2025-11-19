@@ -1,5 +1,5 @@
 #include "RKGHeader.h"
-#include "BigEndianBitReader.h"
+#include "BigEndianFileIO.h"
 #include "FinishTime.h"
 #include "MiiData.h"
 #include <fstream>
@@ -13,7 +13,7 @@
 using namespace std::literals::string_view_literals;
 
 RKGHeader::RKGHeader(std::ifstream& file) {
-    BigEndianBitReader ghostReader{ file };
+    BigEndianFileIO ghostReader{ file };
     
     parseRkgd(ghostReader);
     m_finishTime = FinishTime(ghostReader, 0x04, 0);
@@ -42,7 +42,7 @@ RKGHeader::RKGHeader(std::ifstream& file) {
     m_miiCrc16 = ghostReader.readUInt16(0x86 * 8);
 }
 
-void RKGHeader::parseRkgd(BigEndianBitReader& ghostReader) {
+void RKGHeader::parseRkgd(BigEndianFileIO& ghostReader) {
     auto rkgdBytes = ghostReader.readBytes(0x00, 0x04);
 
     for (auto rkgdByte : rkgdBytes) {
