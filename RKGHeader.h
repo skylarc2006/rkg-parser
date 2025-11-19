@@ -28,7 +28,7 @@ class RKGHeader {
     bool m_compressed;				            // 1 bit, offset 0xC.4
     uint8_t m_unknown3;				                // 2 bits, offset 0x0C.5, always 0?
     uint16_t m_ghostType;				            // 7 bits, offset 0x0C.7
-    bool m_isAutomaticDrift;			            // 1 bit, offset 0x0D.6
+    bool m_automaticDrift;			            // 1 bit, offset 0x0D.6
     bool m_unknown4;					            // 1 bit, offset 0x0D.7, likely padding
     uint16_t m_decompressedInputDataLength;		    // 0x02, offset 0x0E	
     uint16_t m_lapCount;				            // 0x01, offset 0x10
@@ -62,8 +62,8 @@ public:
     std::string_view controllerString();
     bool compressed() { return m_compressed; }
     std::string_view ghostTypeString();
-};
-    std::string_view driftString() { return (m_isAutomaticDrift ? "Automatic" : "Manual"); }
+    std::string_view driftString() { return (m_automaticDrift ? "Automatic" : "Manual"); }
     uint16_t decompressedInputDataLength() { return m_decompressedInputDataLength; }
+};
 
 #endif // RKG_HEADER_H
